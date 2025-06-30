@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - TRAORE SAIDOU ABOUBACAR SIDIKI TRAORE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --ctg-color: #27ae60;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #2ecc71;
+            --text: #333;
+            --text-light: #7f8c8d;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: var(--bg-gradient);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        
+        .cv-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(120deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 40px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--ctg-color) 0%, var(--accent) 50%, var(--secondary) 100%);
+        }
+        
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .photo-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.3);
+            overflow: hidden;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .photo-container:hover {
+            transform: scale(1.05);
+            border-color: var(--secondary);
+        }
+        
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+            color: white;
+        }
+        
+        .position {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .contact-item i {
+            color: var(--secondary);
+        }
+        
+        .ctg-badge {
+            background: var(--ctg-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 300px;
+            align-self: flex-start;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        
+        .ctg-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 30px;
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+        
+        .objective {
+            background: linear-gradient(120deg, rgba(231, 76, 60, 0.05) 0%, rgba(52, 152, 219, 0.05) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--ctg-color);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .objective::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-top: 20px solid var(--ctg-color);
+            border-left: 20px solid transparent;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Experience Section with Icons */
+        .experience-container {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .experience-timeline {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--secondary);
+            margin-left: 18px;
+        }
+        
+        .experience-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 40px;
+            transition: all 0.3s ease;
+        }
+        
+        .experience-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .experience-icon {
+            position: absolute;
+            left: -18px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .experience-item:hover .experience-icon {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .experience-position {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+        
+        .experience-company {
+            font-weight: 500;
+            color: var(--secondary);
+            margin-bottom: 5px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .experience-company i {
+            color: var(--accent);
+        }
+        
+        .experience-date {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            background: #e3f2fd;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .experience-description {
+            padding-left: 10px;
+        }
+        
+        .experience-description ul {
+            padding-left: 20px;
+        }
+        
+        .experience-description li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        .experience-description li::before {
+            content: "▹";
+            color: var(--accent);
+            position: absolute;
+            left: -15px;
+            font-weight: bold;
+        }
+        
+        /* Education Section */
+        .education-container {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .education-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            gap: 20px;
+            transition: all 0.3s ease;
+            border-left: 3px solid var(--secondary);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .education-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-left: 3px solid var(--ctg-color);
+        }
+        
+        .education-icon {
+            min-width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .education-info {
+            flex: 1;
+        }
+        
+        .education-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .education-detail {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+        
+        .education-highlight {
+            color: var(--accent);
+            font-weight: 500;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .skill-category {
+            margin-bottom: 20px;
+        }
+        
+        .skill-category-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .skill-tag {
+            background: #e3f2fd;
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-tag:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        /* Languages */
+        .language-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 3px solid var(--secondary);
+        }
+        
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .language-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .language-name {
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .language-name i {
+            color: var(--secondary);
+        }
+        
+        .language-level {
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 20px;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            
+            .contact-info {
+                justify-content: center;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+            
+            .position {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <div class="header">
+            <div class="profile-section">
+                <div class="photo-container">
+                    <img src="../photos/profile.jpg" alt="Photo de profil">
+                </div>
+                <div class="profile-info">
+                    <h1 class="name">TRAORE SAIDOU ABOUBACAR SIDIKI </h1>
+                    <h2 class="position">Directeur Général du Rail (Rail General Manager)</h2>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Moscou, Russie</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+7 925 358 5275</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>turaman99@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ctg-badge">
+                Candidat pour Compagnie du Transguinéen (CTG)
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="left-column">
+                <div class="objective">
+                    <p>Diplômé avec mention honorable de l'Université Russe de Transport RUT(MIIT), auteur d'un mémoire sur l'organisation du transport ferroviaire de passagers sur le chemin de fer Transguinéen de CTG. Expérience pratique en sécurité et gestion des opérations ferroviaires (RZD), optimisation logistique et compétences avancées en analyse de données (SQL, modélisation mathématique). Prêt à appliquer ma connaissance approfondie du projet CTG, ma compréhension du contexte local guinéen, ma parfaite maîtrise du français et mes compétences techniques pour le lancement et le développement de cette infrastructure nationale clé, en garantissant l'excellence opérationnelle et une croissance durable.</p>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-star"></i> Compétences Clés</h3>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <div class="skill-category-title"><i class="fas fa-train"></i> Expertise Ferroviaire</div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Gestion du trafic</span>
+                                <span class="skill-tag">Sécurité ferroviaire</span>
+                                <span class="skill-tag">Manœuvres</span>
+                                <span class="skill-tag">Documentation (RZD)</span>
+                                <span class="skill-tag">Connaissance ETCS</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <div class="skill-category-title"><i class="fas fa-shipping-fast"></i> Logistique</div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Optimisation d'itinéraires</span>
+                                <span class="skill-tag">Transport multimodal</span>
+                                <span class="skill-tag">Commerce international</span>
+                                <span class="skill-tag">Dédouanement</span>
+                                <span class="skill-tag">Contrôle des coûts</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <div class="skill-category-title"><i class="fas fa-chart-bar"></i> Analyse de Données</div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">SQL</span>
+                                <span class="skill-tag">Analyse de données</span>
+                                <span class="skill-tag">Prévision</span>
+                                <span class="skill-tag">Statistiques mathématiques</span>
+                                <span class="skill-tag">Programmation mathématique</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <div class="skill-category-title"><i class="fas fa-code"></i> IT & Développement</div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">C/C++</span>
+                                <span class="skill-tag">Git</span>
+                                <span class="skill-tag">Linux</span>
+                                <span class="skill-tag">HTML5</span>
+                                <span class="skill-tag">CSS3</span>
+                                <span class="skill-tag">DevOps de base</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-briefcase"></i> Expérience Professionnelle</h3>
+                    <div class="experience-container">
+                        <div class="experience-timeline"></div>
+                        
+                        <div class="experience-item">
+                            <div class="experience-icon">
+                                <i class="fas fa-train"></i>
+                            </div>
+                            <div class="experience-content">
+                                <div class="experience-header">
+                                    <div class="experience-position">Chef de Gare Adjoint</div>
+                                    <div class="experience-date">Juillet 2024 - Présent</div>
+                                </div>
+                                <div class="experience-company">
+                                    <i class="fas fa-building"></i>
+                                    Chemins de Fer Russes (RZD), Moscou, Russie
+                                </div>
+                                <div class="experience-description">
+                                    <ul>
+                                        <li>Garantie de la sécurité : Assurer un trafic ferroviaire (voyageurs/fret) et des manœuvres sécurisés et fluides.</li>
+                                        <li>Gestion du trafic : Organisation de la réception, du départ et du passage des trains ; planification efficace des manœuvres.</li>
+                                        <li>Précision opérationnelle : Contrôle et configuration des itinéraires, position des aiguillages et signaux.</li>
+                                        <li>Coordination opérationnelle : Interaction permanente avec les régulateurs, machinistes, chefs de manœuvre pour résolution des problèmes.</li>
+                                        <li>Gestion documentaire : Tenue responsable des registres de circulation.</li>
+                                    </ul>
+                                    <p><i>J'applique l'approche systémique et le souci du détail acquis ici à l'analyse de données et au développement SQL.</i></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="experience-item">
+                            <div class="experience-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div class="experience-content">
+                                <div class="experience-header">
+                                    <div class="experience-position">Manager Logistique Transport</div>
+                                    <div class="experience-date">Février 2023 - Janvier 2024</div>
+                                </div>
+                                <div class="experience-company">
+                                    <i class="fas fa-building"></i>
+                                    Algorithm Logistic Solutions, Moscou, Russie
+                                </div>
+                                <div class="experience-description">
+                                    <ul>
+                                        <li>Optimisation des transports : Planification et optimisation d'itinéraires multimodaux (incluant aérien).</li>
+                                        <li>Coordination & Contrôle : Pilotage des expéditions du devis à la livraison, suivi des délais.</li>
+                                        <li>Maîtrise des coûts : Contrôle budgétaire, recherche de solutions économiques.</li>
+                                        <li>Douane & Documents : Gestion des dédouanements et documentation associée.</li>
+                                        <li>Résolution de problèmes : Intervention rapide sur les retards, dysfonctionnements et imprévus logistiques.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="experience-item">
+                            <div class="experience-icon">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div class="experience-content">
+                                <div class="experience-header">
+                                    <div class="experience-position">Assistant d'Enseignement en Mathématiques</div>
+                                    <div class="experience-date">Mars 2017 - Septembre 2018</div>
+                                </div>
+                                <div class="experience-company">
+                                    <i class="fas fa-building"></i>
+                                    Institut Supérieur des Mines et Géologie de Boké (ISMGB), Guinée
+                                </div>
+                                <div class="experience-description">
+                                    <ul>
+                                        <li>Soutien pédagogique : Explication de concepts mathématiques complexes, tutorat, aide à la résolution de problèmes.</li>
+                                        <li>Évaluation & Administration : Correction des devoirs, gestion des relevés de notes, préparation de supports.</li>
+                                    </ul>
+                                    <p><i>Développement de solides capacités analytiques et de structuration de l'information, appliquées aujourd'hui aux données et à la logistique.</i></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Formation</h3>
+                    <div class="education-container">
+                        <div class="education-item">
+                            <div class="education-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="education-info">
+                                <div class="education-title">Université Russe de Transport RUT(MIIT)</div>
+                                <div class="education-detail">Institut de Management et Technologies Numériques</div>
+                                <div class="education-detail">Spécialité : Complexe Passager du Transport Ferroviaire</div>
+                                <span class="education-highlight">2024: Diplôme avec mention honorable</span>
+                                <div class="education-detail"><strong>Sujet du Mémoire :</strong> Organisation du transport de passagers sur le chemin de fer Transguinéen (Compagnie du Transguinéen - CTG)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="education-item">
+                            <div class="education-icon">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <div class="education-info">
+                                <div class="education-title">2024: École de Programmation 21 de Moscou</div>
+                                <div class="education-detail">Spécialisation : Développement C/C++ & Ingénierie DevOps</div>
+                                <div class="education-detail">Compétences acquises : HTML, CSS, Git, C/C++, Linux, DevOps de base, SQL</div>
+                            </div>
+                        </div>
+                        
+                        <div class="education-item">
+                            <div class="education-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="education-info">
+                                <div class="education-title">Institut Supérieur des Mines et de Géologie de Boké (ISMGB)</div>
+                                <div class="education-detail">2018: Diplôme avec mention Très Bien</div>
+                                <div class="education-detail">Spécialité : Ingénierie minière</div>
+                            </div>
+                        </div>
+                        
+                        <div class="education-item">
+                            <div class="education-icon">
+                                <i class="fas fa-school"></i>
+                            </div>
+                            <div class="education-info">
+                                <div class="education-title">Lycée Collège Sonfonia de Conakry</div>
+                                <div class="education-detail">2013: Diplôme de Baccalauréat avec mention Bien</div>
+                                <div class="education-detail">Option : Sciences Mathématiques, Classement: 132e</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-language"></i> Langues</h3>
+                    <div class="language-container">
+                        <div class="language-item">
+                            <div class="language-name">
+                                <i class="fas fa-flag"></i> Français
+                            </div>
+                            <div class="language-level">Natif</div>
+                        </div>
+                        <div class="language-item">
+                            <div class="language-name">
+                                <i class="fas fa-comments"></i> Nko (Malinké)
+                            </div>
+                            <div class="language-level">Natif</div>
+                        </div>
+                        <div class="language-item">
+                            <div class="language-name">
+                                <i class="fas fa-comment-dots"></i> Konianké
+                            </div>
+                            <div class="language-level">Natif</div>
+                        </div>
+                        <div class="language-item">
+                            <div class="language-name">
+                                <i class="fas fa-comment"></i> Soussou
+                            </div>
+                            <div class="language-level">Courant</div>
+                        </div>
+                        <div class="language-item">
+                            <div class="language-name">
+                                <i class="fas fa-globe-europe"></i> Russe
+                            </div>
+                            <div class="language-level">Avancé</div>
+                        </div>
+                        <div class="language-item">
+                            <div class="language-name">
+                                <i class="fas fa-globe-americas"></i> Anglais
+                            </div>
+                            <div class="language-level">Avancé</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="additional-info">
+                        <div class="info-item">
+                            <div class="info-title"><i class="fas fa-check-circle"></i> Disponibilité</div>
+                            <p>Excellente condition physique, prêt à déménager et travailler en Guinée pour toute la durée du contrat.</p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-title"><i class="fas fa-star"></i> Qualités Professionnelles</div>
+                            <p>Grande responsabilité, résultats-orientation, intégrité professionnelle, capacité à travailler sous pression et en multitâche, excellentes compétences communicationnelles en environnement multiculturel.</p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-title"><i class="fas fa-bullseye"></i> Motivation</div>
+                            <p>Profondément investi dans la réussite du projet CTG en tant que levier de développement de ma Guinée natale. Désireux de combiner expérience opérationnelle, connaissance locale et compétences IT pour créer un système de transport moderne et efficace.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>CV mis à jour le 30 juin 2025 | Conçu spécialement pour la Compagnie du Transguinéen (CTG) par TRAORE SAIDOU ABOUBACAR SIDIKI </p>
+        </div>
+    </div>
+</body>
+</html>
