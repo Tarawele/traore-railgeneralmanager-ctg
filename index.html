@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* Variables et styles de base */
         :root {
             --primary: #2c3e50;
             --secondary: #3498db;
@@ -19,8 +18,8 @@
             --text: #333;
             --text-light: #7f8c8d;
             --rzd-red: #d52b1e;
-            --shadow: 0 5px 15px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            --letter-bg: #fffdf5;
         }
         
         * {
@@ -31,7 +30,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background: var(--bg-gradient);
             color: var(--text);
             line-height: 1.6;
             padding: 20px;
@@ -47,7 +46,7 @@
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            box-shadow: var(--shadow);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
             border-radius: 15px;
             overflow: hidden;
             position: relative;
@@ -95,11 +94,18 @@
             justify-content: center;
             position: relative;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
         
-        .photo-placeholder {
-            font-size: 50px;
-            color: #aaa;
+        .photo-container:hover {
+            transform: scale(1.05);
+            border-color: var(--secondary);
+        }
+        
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .profile-info {
@@ -135,6 +141,12 @@
             background: rgba(255,255,255,0.1);
             padding: 5px 12px;
             border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
         }
         
         .contact-item i {
@@ -149,8 +161,12 @@
             font-weight: 600;
             text-align: center;
             min-width: 300px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
+            align-self: flex-start;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
             margin-top: 15px;
         }
         
@@ -165,8 +181,7 @@
             background: var(--light);
             border-bottom: 2px solid var(--secondary);
             padding: 0 20px;
-            position: relative;
-            z-index: 1;
+            flex-wrap: wrap;
         }
         
         .nav-tab {
@@ -174,18 +189,22 @@
             cursor: pointer;
             font-weight: 600;
             color: var(--text-light);
-            transition: var(--transition);
+            transition: all 0.3s ease;
             border-bottom: 3px solid transparent;
-            text-align: center;
-            flex: 1;
+            position: relative;
         }
         
-        .nav-tab:hover {
-            background: rgba(52, 152, 219, 0.1);
+        .nav-tab.active {
             color: var(--primary);
+            border-bottom: 3px solid var(--ctg-color);
+            background: rgba(39, 174, 96, 0.05);
         }
         
-        /* Contenu des onglets */
+        .nav-tab:hover:not(.active) {
+            background: rgba(52, 152, 219, 0.1);
+        }
+        
+        /* Main Content */
         .tab-content {
             display: none;
             padding: 40px;
@@ -197,21 +216,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Onglet CV */
-        .cv-section {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-        
-        .cv-left {
-            flex: 2;
-            min-width: 300px;
-        }
-        
-        .cv-right {
-            flex: 1;
-            min-width: 300px;
+        .tab-content.active {
+            display: block;
         }
         
         .section {
@@ -234,80 +240,221 @@
             font-size: 1.5rem;
         }
         
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: var(--ctg-color);
+            margin: 20px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-subtitle i {
+            color: var(--accent);
+        }
+        
+        /* CV Section - Styles from the improved CV */
+        .cv-main-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 30px;
+            padding: 0;
+        }
+        
         .objective {
             background: linear-gradient(120deg, rgba(231, 76, 60, 0.05) 0%, rgba(52, 152, 219, 0.05) 100%);
             padding: 25px;
             border-radius: 12px;
             border-left: 4px solid var(--ctg-color);
             margin-bottom: 30px;
-        }
-        
-        .timeline {
             position: relative;
-            padding-left: 20px;
-            border-left: 2px solid var(--secondary);
-            margin-left: 10px;
         }
         
-        .timeline-item {
-            margin-bottom: 30px;
-            position: relative;
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            transition: var(--transition);
-        }
-        
-        .timeline-item:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow);
-        }
-        
-        .timeline-item:before {
+        .objective::after {
             content: "";
             position: absolute;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--secondary);
-            left: -28px;
-            top: 25px;
-            border: 3px solid white;
-            box-shadow: 0 0 0 2px var(--secondary);
+            top: 0;
+            right: 0;
+            border-top: 20px solid var(--ctg-color);
+            border-left: 20px solid transparent;
         }
         
-        .timeline-header {
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Experience Section with Icons */
+        .experience-container {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .experience-timeline {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--secondary);
+            margin-left: 18px;
+        }
+        
+        .experience-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 40px;
+            transition: all 0.3s ease;
+        }
+        
+        .experience-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .experience-icon {
+            position: absolute;
+            left: -18px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .experience-item:hover .experience-icon {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .experience-header {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
             flex-wrap: wrap;
         }
         
-        .timeline-position {
+        .experience-position {
             font-weight: 600;
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
         
-        .timeline-company {
+        .experience-company {
             font-weight: 500;
             color: var(--secondary);
             margin-bottom: 5px;
             width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .timeline-date {
+        .experience-company i {
+            color: var(--accent);
+        }
+        
+        .experience-date {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             background: #e3f2fd;
             padding: 5px 12px;
             border-radius: 20px;
             font-weight: 500;
         }
         
+        .experience-description {
+            padding-left: 10px;
+        }
+        
+        .experience-description ul {
+            padding-left: 20px;
+        }
+        
+        .experience-description li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        .experience-description li::before {
+            content: "▹";
+            color: var(--accent);
+            position: absolute;
+            left: -15px;
+            font-weight: bold;
+        }
+        
+        /* Education Section */
+        .education-container {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .education-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            gap: 20px;
+            transition: all 0.3s ease;
+            border-left: 3px solid var(--secondary);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .education-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-left: 3px solid var(--ctg-color);
+        }
+        
+        .education-icon {
+            min-width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .education-info {
+            flex: 1;
+        }
+        
+        .education-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .education-detail {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+        
+        .education-highlight {
+            color: var(--accent);
+            font-weight: 500;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        /* Skills Section */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
         
@@ -333,24 +480,147 @@
         .skill-tag {
             background: #e3f2fd;
             color: var(--primary);
-            padding: 5px 12px;
+            padding: 8px 15px;
             border-radius: 20px;
             font-size: 0.9rem;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
         
         .skill-tag:hover {
             background: var(--secondary);
             color: white;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
         }
         
-        /* Onglet Mémoire */
+        /* Languages */
+        .language-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 3px solid var(--secondary);
+        }
+        
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .language-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .language-name {
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .language-name i {
+            color: var(--secondary);
+        }
+        
+        .language-level {
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        /* Additional Info */
+        .additional-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+        }
+        
+        .info-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Lettre de Motivation */
+        .motivation-letter {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--letter-bg);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #eaeaea;
+            position: relative;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .letter-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .letter-title {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .letter-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+        
+        .letter-content {
+            margin-bottom: 40px;
+        }
+        
+        .letter-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .letter-signature {
+            text-align: right;
+            margin-top: 60px;
+        }
+        
+        .signature-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .signature-title {
+            color: var(--text-light);
+        }
+        
+        .letter-decoration {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            color: rgba(231, 76, 60, 0.1);
+            transform: rotate(15deg);
+        }
+        
+        /* Résumé du Mémoire */
         .thesis-container {
             background: linear-gradient(135deg, #f8f9fa 0%, #e8f4f8 100%);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             border: 1px solid #eaeaea;
         }
         
@@ -382,146 +652,125 @@
         
         .thesis-section:last-child {
             border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
         
         .thesis-highlight {
             background: linear-gradient(120deg, rgba(231, 76, 60, 0.1) 0%, rgba(52, 152, 219, 0.1) 100%);
             padding: 20px;
             border-radius: 10px;
+            border-left: 3px solid var(--ctg-color);
             margin: 20px 0;
-            border-left: 4px solid var(--accent);
         }
         
         .thesis-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
             margin-top: 20px;
         }
         
         .thesis-card {
             background: white;
-            border-radius: 10px;
             padding: 20px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
         }
         
-        .thesis-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        .thesis-card h4 {
+            color: var(--ctg-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        /* Onglet Album Photo */
+        /* Album Photo */
         .gallery-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
         }
         
         .gallery-item {
+            position: relative;
             border-radius: 10px;
             overflow: hidden;
-            position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
             height: 250px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
+            background: #f8f9fa;
         }
         
         .gallery-item:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
         
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
+            transition: transform 0.5s ease;
         }
         
         .gallery-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         
         .gallery-caption {
             position: absolute;
             bottom: 0;
             left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
+            width: 100%;
+            background: rgba(44, 62, 80, 0.85);
             color: white;
             padding: 15px;
-            text-align: center;
             transform: translateY(100%);
-            transition: var(--transition);
+            transition: transform 0.3s ease;
         }
         
         .gallery-item:hover .gallery-caption {
             transform: translateY(0);
         }
         
-        /* Onglet Contact */
-        .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-        }
-        
-        .contact-info-section {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .contact-form-section {
-            flex: 2;
-            min-width: 300px;
-        }
-        
-        .contact-card {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-            transition: var(--transition);
-        }
-        
-        .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
+        /* Formulaire de Contact */
         .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
             background: white;
-            border-radius: 10px;
             padding: 30px;
-            box-shadow: var(--shadow);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
+            color: var(--primary);
         }
         
         .form-control {
             width: 100%;
-            padding: 12px 15px;
+            padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
         
         .form-control:focus {
             border-color: var(--secondary);
-            outline: none;
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            outline: none;
         }
         
         textarea.form-control {
@@ -529,40 +778,25 @@
             resize: vertical;
         }
         
-        .btn {
-            display: inline-block;
+        .submit-btn {
             background: var(--ctg-color);
             color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-weight: 600;
             border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
             cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
         }
         
-        .btn:hover {
+        .submit-btn:hover {
             background: #219653;
             transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
-        }
-        
-        .btn-secondary {
-            background: var(--secondary);
-        }
-        
-        .btn-secondary:hover {
-            background: #2980b9;
-        }
-        
-        .btn-accent {
-            background: var(--accent);
-        }
-        
-        .btn-accent:hover {
-            background: #c0392b;
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
         }
         
         /* Footer */
@@ -575,9 +809,9 @@
         
         .download-section {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
+            flex-wrap: wrap;
             margin-bottom: 30px;
         }
         
@@ -585,85 +819,123 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: white;
-            color: var(--primary);
-            padding: 15px 25px;
-            border-radius: 30px;
+            background: var(--secondary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
         }
         
         .download-btn:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .download-btn.cv {
+            background: var(--ctg-color);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .download-btn.cv:hover {
+            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        .download-btn.motivation {
+            background: var(--accent);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .download-btn.motivation:hover {
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.4);
+        }
+        
+        .download-btn.thesis {
+            background: var(--dark);
+            box-shadow: 0 5px 15px rgba(52, 73, 94, 0.3);
+        }
+        
+        .download-btn.thesis:hover {
+            box-shadow: 0 10px 25px rgba(52, 73, 94, 0.4);
         }
         
         .copyright {
-            margin-top: 30px;
+            margin-top: 20px;
             font-size: 0.9rem;
             opacity: 0.8;
         }
         
-        /* Système d'onglets CSS */
-        .tab-input {
-            display: none;
-        }
-        
-        #tab-cv:checked ~ .tab-content#cv-content,
-        #tab-thesis:checked ~ .tab-content#thesis-content,
-        #tab-gallery:checked ~ .tab-content#gallery-content,
-        #tab-contact:checked ~ .tab-content#contact-content {
-            display: block;
-        }
-        
-        #tab-cv:checked ~ .nav-tabs .tab-label[for="tab-cv"],
-        #tab-thesis:checked ~ .nav-tabs .tab-label[for="tab-thesis"],
-        #tab-gallery:checked ~ .nav-tabs .tab-label[for="tab-gallery"],
-        #tab-contact:checked ~ .nav-tabs .tab-label[for="tab-contact"] {
-            color: var(--primary);
-            border-bottom: 3px solid var(--ctg-color);
-            background: rgba(39, 174, 96, 0.05);
-        }
-        
         /* Responsive */
+        @media (max-width: 992px) {
+            .cv-main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .thesis-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .motivation-letter {
+                padding: 30px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .header {
                 padding: 30px 20px;
+                flex-direction: column;
                 text-align: center;
-                justify-content: center;
             }
             
             .profile-section {
                 flex-direction: column;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            
+            .contact-info {
+                justify-content: center;
             }
             
             .nav-tabs {
-                flex-wrap: wrap;
-            }
-            
-            .nav-tab {
-                flex: 1 0 50%;
+                justify-content: center;
             }
             
             .tab-content {
                 padding: 25px;
             }
             
-            .cv-section {
-                flex-direction: column;
+            .name {
+                font-size: 2rem;
+            }
+            
+            .position {
+                font-size: 1.3rem;
+            }
+            
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .motivation-letter {
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="application-container">
-        <!-- Header -->
+        <!-- Header avec photo et informations -->
         <div class="header">
             <div class="profile-section">
                 <div class="photo-container">
-                    <div class="photo-placeholder"><i class="fas fa-user"></i></div>
+                    <img src="./photos/profile.jpg" alt="Photo de profil de TRAORÉ Saïdou">
                 </div>
                 <div class="profile-info">
                     <h1 class="name">TRAORÉ Saïdou Aboubacar Sidiki</h1>
@@ -685,138 +957,271 @@
                 </div>
             </div>
             <div class="ctg-badge">
-                <i class="fas fa-train"></i> Candidat pour Compagnie du Transguinéen (CTG)
+                Candidat pour Compagnie du Transguinéen (CTG)
             </div>
         </div>
         
-        <!-- Navigation -->
-        <input type="radio" name="tabs" id="tab-cv" class="tab-input" checked>
-        <input type="radio" name="tabs" id="tab-thesis" class="tab-input">
-        <input type="radio" name="tabs" id="tab-gallery" class="tab-input">
-        <input type="radio" name="tabs" id="tab-contact" class="tab-input">
-        
+        <!-- Navigation avec nouvel onglet Lettre de Motivation -->
         <div class="nav-tabs">
-            <label for="tab-cv" class="nav-tab tab-label">
-                <i class="fas fa-user-tie"></i> CV
-            </label>
-            <label for="tab-thesis" class="nav-tab tab-label">
-                <i class="fas fa-graduation-cap"></i> Mémoire
-            </label>
-            <label for="tab-gallery" class="nav-tab tab-label">
-                <i class="fas fa-images"></i> Album Photo
-            </label>
-            <label for="tab-contact" class="nav-tab tab-label">
-                <i class="fas fa-envelope"></i> Contact
-            </label>
+            <div class="nav-tab active" data-tab="cv">Curriculum Vitae</div>
+            <div class="nav-tab" data-tab="motivation">Lettre de Motivation</div>
+            <div class="nav-tab" data-tab="thesis">Mémoire de Recherche</div>
+            <div class="nav-tab" data-tab="gallery">Album Photo</div>
+            <div class="nav-tab" data-tab="contact">Contact</div>
         </div>
         
         <!-- Contenu des onglets -->
-        <!-- Onglet CV -->
-        <div id="cv-content" class="tab-content">
-            <div class="cv-section">
-                <div class="cv-left">
-                    <div class="objective">
-                        <p>Diplômé avec distinction de l'Université Russe des Transports (MIIT), auteur d'un mémoire sur l'organisation du transport ferroviaire de passagers sur le chemin de fer Transguinéen de CTG. Expérience pratique en sécurité et gestion des opérations ferroviaires (RZD), optimisation logistique et compétences avancées en analyse de données (SQL, modélisation mathématique). Prêt à appliquer ma connaissance approfondie du projet CTG, ma compréhension du contexte local guinéen, ma parfaite maîtrise du français et mes compétences techniques pour le lancement et le développement de cette infrastructure nationale clé, en garantissant l'excellence opérationnelle et une croissance durable.</p>
+        <div class="tab-content active" id="cv-content">
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-user-tie"></i> Profil Professionnel</h2>
+                <div class="objective">
+                    <p>Diplômé avec mention honorable de l'Université Russe des Transports RUT(MIIT), auteur d'un mémoire sur l'organisation du transport ferroviaire de passagers sur le chemin de fer Transguinéen de CTG. Expérience pratique en sécurité et gestion des opérations ferroviaires (RZD), optimisation logistique et compétences avancées en analyse de données (SQL, modélisation mathématique). Prêt à appliquer ma connaissance approfondie du projet CTG, ma compréhension du contexte local guinéen, ma parfaite maîtrise du français et mes compétences techniques pour le lancement et le développement de cette infrastructure nationale clé, en garantissant l'excellence opérationnelle et une croissance durable.</p>
+                </div>
+            </div>
+            
+            <div class="cv-main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-star"></i> Compétences Clés</h3>
+                        <div class="skills-grid">
+                            <div class="skill-category">
+                                <div class="skill-category-title"><i class="fas fa-train"></i> Expertise Ferroviaire</div>
+                                <div class="skill-tags">
+                                    <span class="skill-tag">Gestion du trafic</span>
+                                    <span class="skill-tag">Sécurité ferroviaire</span>
+                                    <span class="skill-tag">Manœuvres</span>
+                                    <span class="skill-tag">Documentation (RZD)</span>
+                                    <span class="skill-tag">Connaissance ETCS</span>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <div class="skill-category-title"><i class="fas fa-shipping-fast"></i> Logistique</div>
+                                <div class="skill-tags">
+                                    <span class="skill-tag">Optimisation d'itinéraires</span>
+                                    <span class="skill-tag">Transport multimodal</span>
+                                    <span class="skill-tag">Commerce international</span>
+                                    <span class="skill-tag">Dédouanement</span>
+                                    <span class="skill-tag">Contrôle des coûts</span>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <div class="skill-category-title"><i class="fas fa-chart-bar"></i> Analyse de Données</div>
+                                <div class="skill-tags">
+                                    <span class="skill-tag">SQL</span>
+                                    <span class="skill-tag">Analyse de données</span>
+                                    <span class="skill-tag">Prévision</span>
+                                    <span class="skill-tag">Statistiques mathématiques</span>
+                                    <span class="skill-tag">Programmation mathématique</span>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <div class="skill-category-title"><i class="fas fa-code"></i> IT & Développement</div>
+                                <div class="skill-tags">
+                                    <span class="skill-tag">C/C++</span>
+                                    <span class="skill-tag">Git</span>
+                                    <span class="skill-tag">Linux</span>
+                                    <span class="skill-tag">HTML5</span>
+                                    <span class="skill-tag">CSS3</span>
+                                    <span class="skill-tag">DevOps de base</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="section">
                         <h3 class="section-title"><i class="fas fa-briefcase"></i> Expérience Professionnelle</h3>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-header">
-                                    <div class="timeline-position">Chef de Gare Adjoint</div>
-                                    <div class="timeline-date">Juillet 2024 - Présent</div>
+                        <div class="experience-container">
+                            <div class="experience-timeline"></div>
+                            
+                            <div class="experience-item">
+                                <div class="experience-icon">
+                                    <i class="fas fa-train"></i>
                                 </div>
-                                <div class="timeline-company">Chemins de Fer Russes (RZD), Moscou, Russie</div>
-                                <div class="timeline-description">
-                                    <ul>
-                                        <li>Garantie de la sécurité et fluidité du trafic ferroviaire</li>
-                                        <li>Organisation de la réception, départ et passage des trains</li>
-                                        <li>Contrôle et configuration des itinéraires et signaux</li>
-                                        <li>Coordination avec les équipes opérationnelles</li>
-                                    </ul>
+                                <div class="experience-content">
+                                    <div class="experience-header">
+                                        <div class="experience-position">Chef de Gare Adjoint</div>
+                                        <div class="experience-date">Juillet 2024 - Présent</div>
+                                    </div>
+                                    <div class="experience-company">
+                                        <i class="fas fa-building"></i>
+                                        Chemins de Fer Russes (RZD), Moscou, Russie
+                                    </div>
+                                    <div class="experience-description">
+                                        <ul>
+                                            <li>Garantie de la sécurité : Assurer un trafic ferroviaire (voyageurs/fret) et des manœuvres sécurisés et fluides.</li>
+                                            <li>Gestion du trafic : Organisation de la réception, du départ et du passage des trains ; planification efficace des manœuvres.</li>
+                                            <li>Précision opérationnelle : Contrôle et configuration des itinéraires, position des aiguillages et signaux.</li>
+                                            <li>Coordination opérationnelle : Interaction permanente avec les régulateurs, machinistes, chefs de manœuvre pour résolution des problèmes.</li>
+                                            <li>Gestion documentaire : Tenue responsable des registres de circulation.</li>
+                                        </ul>
+                                        <p><i>J'applique l'approche systémique et le souci du détail acquis ici à l'analyse de données et au développement SQL.</i></p>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="timeline-item">
-                                <div class="timeline-header">
-                                    <div class="timeline-position">Manager Logistique Transport</div>
-                                    <div class="timeline-date">Février 2023 - Janvier 2024</div>
+                            <div class="experience-item">
+                                <div class="experience-icon">
+                                    <i class="fas fa-truck"></i>
                                 </div>
-                                <div class="timeline-company">Algorithm Logistic Solutions, Moscou, Russie</div>
-                                <div class="timeline-description">
-                                    <ul>
-                                        <li>Optimisation des transports multimodaux</li>
-                                        <li>Pilotage des expéditions et suivi des délais</li>
-                                        <li>Contrôle budgétaire et recherche de solutions économiques</li>
-                                        <li>Gestion des dédouanements et documentation</li>
-                                    </ul>
+                                <div class="experience-content">
+                                    <div class="experience-header">
+                                        <div class="experience-position">Manager Logistique Transport</div>
+                                        <div class="experience-date">Février 2023 - Janvier 2024</div>
+                                    </div>
+                                    <div class="experience-company">
+                                        <i class="fas fa-building"></i>
+                                        Algorithm Logistic Solutions, Moscou, Russie
+                                    </div>
+                                    <div class="experience-description">
+                                        <ul>
+                                            <li>Optimisation des transports : Planification et optimisation d'itinéraires multimodaux (incluant aérien).</li>
+                                            <li>Coordination & Contrôle : Pilotage des expéditions du devis à la livraison, suivi des délais.</li>
+                                            <li>Maîtrise des coûts : Contrôle budgétaire, recherche de solutions économiques.</li>
+                                            <li>Douane & Documents : Gestion des dédouanements et documentation associée.</li>
+                                            <li>Résolution de problèmes : Intervention rapide sur les retards, dysfonctionnements et imprévus logistiques.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="experience-item">
+                                <div class="experience-icon">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <div class="experience-content">
+                                    <div class="experience-header">
+                                        <div class="experience-position">Assistant d'Enseignement en Mathématiques</div>
+                                        <div class="experience-date">Mars 2017 - Septembre 2018</div>
+                                    </div>
+                                    <div class="experience-company">
+                                        <i class="fas fa-building"></i>
+                                        Institut Supérieur des Mines et Géologie de Boké (ISMGB), Guinée
+                                    </div>
+                                    <div class="experience-description">
+                                        <ul>
+                                            <li>Soutien pédagogique : Explication de concepts mathématiques complexes, tutorat, aide à la résolution de problèmes.</li>
+                                            <li>Évaluation & Administration : Correction des devoirs, gestion des relevés de notes, préparation de supports.</li>
+                                        </ul>
+                                        <p><i>Développement de solides capacités analytiques et de structuration de l'information, appliquées aujourd'hui aux données et à la logistique.</i></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="cv-right">
+                <div class="right-column">
                     <div class="section">
                         <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Formation</h3>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-header">
-                                    <div class="timeline-position">Université Russe des Transports (MIIT)</div>
-                                    <div class="timeline-date">2024</div>
+                        <div class="education-container">
+                            <div class="education-item">
+                                <div class="education-icon">
+                                    <i class="fas fa-university"></i>
                                 </div>
-                                <div class="timeline-company">Moscou, Russie</div>
-                                <div class="timeline-description">
-                                    <p>Diplôme avec Distinction</p>
-                                    <p>Spécialité : Complexe Passager du Transport Ferroviaire</p>
-                                    <p><strong>Sujet du Mémoire :</strong> Organisation du transport de passagers sur le chemin de fer Transguinéen</p>
+                                <div class="education-info">
+                                    <div class="education-title">Université Russe des Transports (MIIT)</div>
+                                    <div class="education-detail">Institut de Management et Technologies Numériques</div>
+                                    <div class="education-detail">Spécialité : Complexe Passager du Transport Ferroviaire</div>
+                                    <span class="education-highlight">Diplôme avec mention honorable</span>
+                                    <div class="education-detail"><strong>Sujet du Mémoire :</strong> Organisation du transport de passagers sur le chemin de fer Transguinéen (Compagnie du Transguinéen - CTG)</div>
                                 </div>
                             </div>
                             
-                            <div class="timeline-item">
-                                <div class="timeline-header">
-                                    <div class="timeline-position">École de Programmation 21</div>
-                                    <div class="timeline-date">2024</div>
+                            <div class="education-item">
+                                <div class="education-icon">
+                                    <i class="fas fa-laptop-code"></i>
                                 </div>
-                                <div class="timeline-company">Moscou, Russie</div>
-                                <div class="timeline-description">
-                                    <p>Programmation C/C++ et DevOps</p>
+                                <div class="education-info">
+                                    <div class="education-title">École de Programmation 21 de Moscou</div>
+                                    <div class="education-detail">Spécialisation : Développement C/C++ & Ingénierie DevOps</div>
+                                    <div class="education-detail">Compétences acquises : HTML, CSS, Git, C/C++, Linux, DevOps de base, SQL</div>
+                                </div>
+                            </div>
+                            
+                            <div class="education-item">
+                                <div class="education-icon">
+                                    <i class="fas fa-gem"></i>
+                                </div>
+                                <div class="education-info">
+                                    <div class="education-title">Institut Supérieur des Mines et de Géologie de Boké (ISMGB)</div>
+                                    <div class="education-detail">Diplôme avec mention Très Bien</div>
+                                    <div class="education-detail">Spécialité : Ingénierie minière</div>
+                                </div>
+                            </div>
+                            
+                            <div class="education-item">
+                                <div class="education-icon">
+                                    <i class="fas fa-school"></i>
+                                </div>
+                                <div class="education-info">
+                                    <div class="education-title">Lycée Collège Sonfonia de Conakry</div>
+                                    <div class="education-detail">Diplôme de Baccalauréat avec mention Bien</div>
+                                    <div class="education-detail">Option : Sciences Mathématiques, Classement: 132e</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="section">
-                        <h3 class="section-title"><i class="fas fa-tools"></i> Compétences</h3>
-                        <div class="skills-grid">
-                            <div class="skill-category">
-                                <div class="skill-category-title"><i class="fas fa-train"></i> Ferroviaire</div>
-                                <div class="skill-tags">
-                                    <span class="skill-tag">Gestion du trafic</span>
-                                    <span class="skill-tag">Sécurité ferroviaire</span>
-                                    <span class="skill-tag">Planification</span>
+                        <h3 class="section-title"><i class="fas fa-language"></i> Langues</h3>
+                        <div class="language-container">
+                            <div class="language-item">
+                                <div class="language-name">
+                                    <i class="fas fa-flag"></i> Français
                                 </div>
+                                <div class="language-level">Natif</div>
+                            </div>
+                            <div class="language-item">
+                                <div class="language-name">
+                                    <i class="fas fa-comments"></i> Nko (Malinké)
+                                </div>
+                                <div class="language-level">Natif</div>
+                            </div>
+                            <div class="language-item">
+                                <div class="language-name">
+                                    <i class="fas fa-comment-dots"></i> Konianké
+                                </div>
+                                <div class="language-level">Natif</div>
+                            </div>
+                            <div class="language-item">
+                                <div class="language-name">
+                                    <i class="fas fa-comment"></i> Soussou
+                                </div>
+                                <div class="language-level">Courant</div>
+                            </div>
+                            <div class="language-item">
+                                <div class="language-name">
+                                    <i class="fas fa-globe-europe"></i> Russe
+                                </div>
+                                <div class="language-level">Avancé</div>
+                            </div>
+                            <div class="language-item">
+                                <div class="language-name">
+                                    <i class="fas fa-globe-americas"></i> Anglais
+                                </div>
+                                <div class="language-level">Avancé</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="additional-info">
+                            <div class="info-item">
+                                <div class="info-title"><i class="fas fa-check-circle"></i> Disponibilité</div>
+                                <p>Excellente condition physique, prêt à déménager et travailler en Guinée pour toute la durée du contrat.</p>
                             </div>
                             
-                            <div class="skill-category">
-                                <div class="skill-category-title"><i class="fas fa-laptop-code"></i> Informatique</div>
-                                <div class="skill-tags">
-                                    <span class="skill-tag">SQL</span>
-                                    <span class="skill-tag">C/C++</span>
-                                    <span class="skill-tag">DevOps</span>
-                                    <span class="skill-tag">Analyse de données</span>
-                                </div>
+                            <div class="info-item">
+                                <div class="info-title"><i class="fas fa-star"></i> Qualités Professionnelles</div>
+                                <p>Grande responsabilité, résultats-orientation, intégrité professionnelle, capacité à travailler sous pression et en multitâche, excellentes compétences communicationnelles en environnement multiculturel.</p>
                             </div>
                             
-                            <div class="skill-category">
-                                <div class="skill-category-title"><i class="fas fa-language"></i> Langues</div>
-                                <div class="skill-tags">
-                                    <span class="skill-tag">Français (Natif)</span>
-                                    <span class="skill-tag">Russe (C1)</span>
-                                    <span class="skill-tag">Anglais (B1)</span>
-                                    <span class="skill-tag">Nko (Natif)</span>
-                                </div>
+                            <div class="info-item">
+                                <div class="info-title"><i class="fas fa-bullseye"></i> Motivation</div>
+                                <p>Profondément investi dans la réussite du projet CTG en tant que levier de développement de ma Guinée natale. Désireux de combiner expérience opérationnelle, connaissance locale et compétences IT pour créer un système de transport moderne et efficace.</p>
                             </div>
                         </div>
                     </div>
@@ -824,66 +1229,131 @@
             </div>
         </div>
         
-        <!-- Onglet Mémoire -->
-        <div id="thesis-content" class="tab-content">
+        <!-- Nouvel onglet Lettre de Motivation -->
+        <div class="tab-content" id="motivation-content">
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-envelope-open-text"></i> Lettre de Motivation</h2>
+                
+                <div class="motivation-letter">
+                    <div class="letter-decoration">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    
+                    <div class="letter-header">
+                        <div class="letter-title">Lettre de Motivation</div>
+                        <div class="letter-subtitle">Candidature au poste de Directeur Général du Rail - CTG</div>
+                    </div>
+                    
+                    <div class="letter-content">
+                        <p>À l'attention du Comité de Recrutement,<br>
+                        Compagnie du Transguinéen (CTG)</p>
+                        
+                        <p>Conakry, le 16 juin 2025</p>
+                        
+                        <p>Madame, Monsieur,</p>
+                        
+                        <p>Je me permets de vous soumettre ma candidature pour le poste de Directeur Général du Rail au sein de la Compagnie du Transguinéen (CTG). Diplômé avec mention honorable de l'Université Russe des Transports (MIIT), et fort d'une expérience opérationnelle au sein des Chemins de Fer Russes (RZD), je suis convaincu que mon profil correspond parfaitement aux exigences de ce poste stratégique.</p>
+                        
+                        <p>Mon mémoire de recherche, soutenu avec distinction, portait précisément sur "L'organisation du transport de passagers sur le chemin de fer Transguinéen". Cette étude approfondie m'a permis de développer une connaissance intime du projet CTG, de ses enjeux techniques, économiques et sociaux. J'ai notamment élaboré un modèle opérationnel complet incluant :</p>
+                        
+                        <ul>
+                            <li>L'analyse des flux passagers par un modèle gravitationnel adapté au contexte guinéen</li>
+                            <li>L'optimisation de la capacité ferroviaire selon les normes UIC </li>
+                            <li>Un plan de déploiement en deux phases avec une projection à 18 trains/jour</li>
+                            <li>Une étude économique validant la viabilité du transport de passagers</li>
+                        </ul>
+                        
+                        <p>Mon expérience pratique en tant que Chef de Gare Adjoint chez RZD m'a doté de compétences essentielles en gestion du trafic, sécurité ferroviaire et coordination opérationnelle. J'ai développé une approche systémique et un souci du détail qui me permettent d'appréhender la complexité d'un projet d'envergure comme le vôtre.</p>
+                        
+                        <p>Originaire de Guinée (Kérouané), ma parfaite maîtrise du français et des langues locales (Nko, Konianké, Soussou) constitue un atout majeur pour faciliter l'intégration du projet dans les communautés riveraines et garantir une communication fluide avec toutes les parties prenantes.</p>
+                        
+                        <p>Je possède également des compétences techniques avancées en analyse de données (SQL, statistiques) et en programmation (C/C++), qui me permettront de développer des outils d'optimisation et de suivi des performances adaptés aux besoins spécifiques du CTG.</p>
+                        
+                        <p>Mon engagement pour la réussite du projet Transguinéen va au-delà d'une simple opportunité professionnelle. Il s'agit pour moi de contribuer au développement économique de ma Guinée natale et de participer à la création d'une infrastructure qui transformera durablement le paysage des transports dans notre région.</p>
+                        
+                        <p>Je comprends que mon expérience de terrain (4 ans) est inférieure à vos attentes. C'est pourquoi je me positionne avec flexibilité : prêt à débuter comme <strong>Responsable des Opérations ferroviaires</strong> ou <strong>Responsable des infrastructures ferroviaires</strong>, avec l'ambition d'évoluer rapidement grâce à ma maîtrise technique du projet et mon engagement total.</p> 
+                        
+                        <p>Je suis prêt à m'installer en Guinée pour la durée du contrat et à m'investir pleinement dans le lancement et le développement de cette entreprise nationale clé.</p>
+                        
+                        <p>Je me tiens à votre disposition pour un entretien afin de vous exposer plus en détail ma vision pour le développement du transport ferroviaire en Guinée et les solutions concrètes que je propose pour assurer le succès opérationnel du CTG.</p>
+                    </div>
+                    
+                    <div class="letter-signature">
+                        <p>Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées,</p>
+                        <div class="signature-name">TRAORÉ Saïdou Aboubacar Sidiki</div>
+                        <div class="signature-title">Directeur Général du Rail (Candidat)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Résumé du Mémoire -->
+        <div class="tab-content" id="thesis-content">
             <div class="thesis-container">
                 <div class="thesis-header">
-                    <h2 class="thesis-title">Résumé du Mémoire</h2>
+                    <h2 class="thesis-title">Résumé du Mémoire de Recherche</h2>
                     <p class="thesis-subtitle">Organisation du transport de passagers sur le chemin de fer Transguinéen</p>
                 </div>
                 
                 <div class="thesis-content">
                     <div class="thesis-section">
-                        <h3 class="section-title"><i class="fas fa-bullseye"></i> Objectif</h3>
-                        <p>Développer un modèle opérationnel complet pour le service passagers sur le corridor ferroviaire du Transguinéen (670 km), transformant une infrastructure minière en axe multimodal intégrant fret et passagers pour désenclaver les territoires guinéens.</p>
+                        <h3 class="section-subtitle"><i class="fas fa-bullseye"></i> Contexte et Objectifs</h3>
+                        <p>Ce travail de recherche, réalisé à l'Université Russe des Transports (MIIT), propose un modèle opérationnel complet pour le déploiement du service passagers sur l'infrastructure ferroviaire du Transguinéen (670 km). Il répond à un besoin critique de désenclavement territorial en Guinée.</p>
+                        
+                        <div class="thesis-highlight">
+                            <p><strong>Objectifs principaux :</strong></p>
+                            <ul>
+                                <li>Développer un système intégré de transport passagers sur le corridor CTG</li>
+                                <li>Optimiser l'utilisation de l'infrastructure existante</li>
+                                <li>Créer un modèle économique viable pour le transport de passagers</li>
+                            </ul>
+                        </div>
                     </div>
                     
                     <div class="thesis-section">
-                        <h3 class="section-title"><i class="fas fa-chart-line"></i> Méthodologie</h3>
+                        <h3 class="section-subtitle"><i class="fas fa-chart-line"></i> Méthodologie et Approche</h3>
                         <div class="thesis-grid">
                             <div class="thesis-card">
                                 <h4><i class="fas fa-users"></i> Analyse de Demande</h4>
-                                <p>Modèle gravitationnel adapté utilisant les données démographiques et économiques de 8 villes clés le long du corridor.</p>
+                                <p>Modèle gravitationnel adapté utilisant les données démographiques et socio-économiques de la Guinée pour prédire les flux passagers.</p>
                             </div>
                             <div class="thesis-card">
-                                <h4><i class="fas fa-calculator"></i> Capacité Ferroviaire</h4>
-                                <p>Calculs de saturation selon les normes UIC 406 avec coefficient de réduction ε=1.26 pour les trains passagers.</p>
+                                <h4><i class="fas fa-cogs"></i> Capacité Ferroviaire</h4>
+                                <p>Calculs de saturation selon les normes UIC avec un coefficient de réduction ε=1.26 pour l'intégration trafic fret/passagers.</p>
                             </div>
                             <div class="thesis-card">
-                                <h4><i class="fas fa-euro-sign"></i> Optimisation Économique</h4>
-                                <p>Analyse comparative de 4 schémas de formation des trains pour minimiser les coûts.</p>
+                                <h4><i class="fas fa-money-bill-wave"></i> Optimisation des Coûts</h4>
+                                <p>Analyse comparative de 4 schémas de formation des trains pour identifier la solution la plus économique (1 511 RUB/passager).</p>
                             </div>
                             <div class="thesis-card">
-                                <h4><i class="fas fa-drafting-compass"></i> Dimensionnement</h4>
-                                <p>Application des normes internationales pour le calcul des capacités des gares.</p>
+                                <h4><i class="fas fa-ruler-combined"></i> Dimensionnement</h4>
+                                <p>Application des normes internationales pour le calcul des capacités des gares avec coefficients d'ajustement k1-k4.</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="thesis-section">
-                        <h3 class="section-title"><i class="fas fa-check-circle"></i> Résultats Clés</h3>
+                        <h3 class="section-subtitle"><i class="fas fa-check-circle"></i> Résultats Clés</h3>
                         <div class="thesis-highlight">
-                            <p><i class="fas fa-lightbulb"></i> <strong>Schéma optimal</strong> : 10 voitures tractées à 80.3 km/h pour un coût réduit de 1 511 RUB/passager</p>
+                            <ul>
+                                <li><strong>18 trains/jour</strong> prévus sur 40 relations entre 8 villes-clés</li>
+                                <li>Capture de <strong>10% de part modale</strong> initiale dans le corridor</li>
+                                <li>Schéma optimal : <strong>10 voitures tractées</strong> à 80.3 km/h de vitesse commerciale</li>
+                                <li>Implantation de <strong>8 gares principales</strong> et 12 haltes</li>
+                                <li>Validation des <strong>longueurs de quais</strong> (481m &lt; 1250m)</li>
+                            </ul>
                         </div>
-                        <ul>
-                            <li>18 trains/jour prévus sur 40 relations desservant 8 villes</li>
-                            <li>Capture de 10% de part modale initiale</li>
-                            <li>8 gares principales + 12 haltes dimensionnées</li>
-                            <li>Validation des longueurs de quais (481m &lt; 1250m)</li>
-                            <li>Modélisation des conflits train/minerai résolue</li>
-                        </ul>
                     </div>
                     
                     <div class="thesis-section">
-                        <h3 class="section-title"><i class="fas fa-road"></i> Feuille de Route</h3>
+                        <h3 class="section-subtitle"><i class="fas fa-road"></i> Feuille de Route Opérationnelle</h3>
                         <div class="thesis-grid">
-                            <div class="thesis-card" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);">
+                            <div class="thesis-card">
                                 <h4><i class="fas fa-flag"></i> Phase 1 - Mise en service</h4>
-                                <p>4 trains intercités/jour sur Conakry ↔ Kérouané avec cadencement adapté aux flux miniers</p>
+                                <p>4 trains intercités/jour sur l'axe Conakry ↔ Kérouané avec cadencement adapté aux flux miniers.</p>
                             </div>
-                            <div class="thesis-card" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);">
+                            <div class="thesis-card">
                                 <h4><i class="fas fa-expand"></i> Phase 2 - Densification</h4>
-                                <p>Intégration de 14 trains régionaux et développement de l'intermodalité avec l'aéroport de Conakry</p>
+                                <p>Intégration de 14 trains régionaux et développement de l'intermodalité avec l'aéroport de Conakry.</p>
                             </div>
                         </div>
                     </div>
@@ -891,68 +1361,72 @@
             </div>
         </div>
         
-        <!-- Onglet Album Photo -->
-        <div id="gallery-content" class="tab-content">
-            <h3 class="section-title"><i class="fas fa-images"></i> Album Professionnel</h3>
-            <p style="text-align: center; margin-bottom: 30px;">Expérience aux Chemins de Fer Russes (RZD) et dans le secteur logistique</p>
-            
-            <div class="gallery-container">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="Gare ferroviaire">
-                    <div class="gallery-caption">Gestion opérationnelle - Gare centrale de Moscou</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1549488344-a6b38a6c9d1e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="Contrôle du trafic">
-                    <div class="gallery-caption">Contrôle du trafic ferroviaire - Poste de commandement</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1556740734-9f9ca0e7276a?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="Formation technique">
-                    <div class="gallery-caption">Formation technique aux systèmes de signalisation</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="Réunion d'équipe">
-                    <div class="gallery-caption">Réunion d'équipe - Coordination opérationnelle</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="Logistique">
-                    <div class="gallery-caption">Optimisation logistique - Centre de distribution</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="Analyse de données">
-                    <div class="gallery-caption">Analyse de données pour l'optimisation des trajets</div>
+        <!-- Album Photo -->
+        <div class="tab-content" id="gallery-content">
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-camera"></i> Album Photo Professionnel</h2>
+                <p>Découvrez mon parcours professionnel à travers ces moments clés dans les gares RZD et au bureau.</p>
+                
+                <div class="gallery-container">
+                    <div class="gallery-item">
+                        <img src="./photos/coordination.jpg" alt="Gestion des opérations en gare">
+                        <div class="gallery-caption">
+                            <h4>Gestion des opérations en gare</h4>
+                            <p>Contrôle du trafic ferroviaire et coordination des équipes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="./photos/feux.jpg" alt="Sécurité ferroviaire">
+                        <div class="gallery-caption">
+                            <h4>Sécurité ferroviaire</h4>
+                            <p>Un ensemble de feux de signalisation pour la sécurité</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="./photos/analyse.jpg" alt="Analyse des données opérationnelles">
+                        <div class="gallery-caption">
+                            <h4>Analyse des données opérationnelles</h4>
+                            <p>Utilisation de SQL et Excel pour optimiser les flux</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="./photos/reunion.jpg" alt="Réunion d'équipe avec la direction centrale des chémins de fer de Moscou">
+                        <div class="gallery-caption">
+                            <h4>Réunion d'équipe</h4>
+                            <p>Coordination avec les différentes parties prenantes et à votre droite se trouve le directeur général des chémins de fer de Moscou</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="./photos/formation.jpg" alt="Formation technique">
+                        <div class="gallery-caption">
+                            <h4>Formation technique</h4>
+                            <p>Partage de connaissances avec les équipes opérationnelles</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="./photos/remise_diplome_rouge.jpeg" alt="Présentation de projet">
+                        <div class="gallery-caption">
+                            <h4>Présentation de projet</h4>
+                            <p>Exposition des résultats d'optimisation des trafics</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <!-- Onglet Contact -->
-        <div id="contact-content" class="tab-content">
-            <div class="contact-container">
-                <div class="contact-info-section">
-                    <h3 class="section-title"><i class="fas fa-info-circle"></i> Informations de Contact</h3>
-                    
-                    <div class="contact-card">
-                        <h4><i class="fas fa-envelope"></i> Email Direct</h4>
-                        <p>Envoyez-moi un message directement à :</p>
-                        <p style="font-weight: 500; margin: 15px 0;">turaman99@gmail.com</p>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <h4><i class="fas fa-map-marker-alt"></i> Localisation</h4>
-                        <p>Moscou, Russie</p>
-                        <p>Disponible pour déplacement en Guinée</p>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <h4><i class="fas fa-clock"></i> Disponibilité</h4>
-                        <p>À votre convenance pour un entretien</p>
-                        <p>Horaire flexible</p>
-                    </div>
-                </div>
+        <!-- Formulaire de Contact -->
+        <div class="tab-content" id="contact-content">
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-envelope"></i> Contactez-moi</h2>
+                <p>Utilisez ce formulaire pour me contacter directement par email.</p>
                 
-                <div class="contact-form-section">
-                    <h3 class="section-title"><i class="fas fa-paper-plane"></i> Envoyez un Message</h3>
-                    
-                    <form class="contact-form" action="mailto:turaman99@gmail.com" method="post" enctype="text/plain">
+                <div class="contact-form">
+                    <form id="contactForm">
                         <div class="form-group">
                             <label for="name">Votre Nom</label>
                             <input type="text" id="name" class="form-control" required>
@@ -973,35 +1447,69 @@
                             <textarea id="message" class="form-control" required></textarea>
                         </div>
                         
-                        <button type="submit" class="btn btn-secondary">
-                            <i class="fas fa-paper-plane"></i> Envoyer le Message
-                        </button>
+                        <button type="submit" class="submit-btn">Envoyer le Message <i class="fas fa-paper-plane"></i></button>
                     </form>
                 </div>
             </div>
         </div>
         
-        <!-- Footer -->
+        <!-- Footer avec boutons de téléchargement -->
         <div class="footer">
-            <h3 style="margin-bottom: 30px;">Télécharger les documents</h3>
-            
             <div class="download-section">
-                <a href="Traore.pdf" class="download-btn">
+                <a href="./documents/CV - TRAORE SAIDOU ABOUBACAR SIDIKI TRAORE.pdf" class="download-btn cv">
                     <i class="fas fa-download"></i> Télécharger le CV
                 </a>
-                <a href="#" class="download-btn">
+                <a href="./documents/Lettre de Motivation - CTG.pdf" class="download-btn motivation">
                     <i class="fas fa-file-alt"></i> Lettre de Motivation
                 </a>
-                <a href="#" class="download-btn">
+                <a href="./documents/Résumé du Mémoire - Organisation des Transports sur le Transguinéen.pdf" class="download-btn thesis">
                     <i class="fas fa-book"></i> Résumé du Mémoire
                 </a>
             </div>
             
-            <p class="copyright">
-                Candidature développée avec HTML/CSS par TRAORÉ Saïdou Aboubacar Sidiki - Démonstration des compétences IT
-                <br>© 2025 - Tous droits réservés
-            </p>
+            <p class="copyright">© 2025 TRAORÉ Saïdou Aboubacar Sidiki - Tous droits réservés | Site développé avec HTML/CSS pour démontrer mes compétences IT</p>
         </div>
     </div>
+    
+    <script>
+        // Navigation par onglets
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Retirer la classe active de tous les onglets et contenus
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Ajouter la classe active à l'onglet cliqué
+                tab.classList.add('active');
+                
+                // Afficher le contenu correspondant
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-content`).classList.add('active');
+            });
+        });
+        
+        // Gestion du formulaire de contact
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Récupérer les valeurs du formulaire
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Construire le lien mailto
+            const mailtoLink = `mailto:turaman99@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Bonjour,\n\n${message}\n\nCordialement,\n${name}\n${email}`)}`;
+            
+            // Ouvrir le client de messagerie
+            window.location.href = mailtoLink;
+            
+            // Réinitialiser le formulaire
+            this.reset();
+            
+            // Afficher un message de confirmation
+            alert('Votre message a été préparé pour envoi. Merci de vérifier votre client de messagerie.');
+        });
+    </script>
 </body>
 </html>
